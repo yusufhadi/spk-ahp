@@ -56,6 +56,8 @@
                             <?php
                             $normal = normalize($matriks, $total);
                             $rata = get_rata($normal);
+                            // $mmult = mmult($matriks, $rata);
+                            $cm = consistency_measure($matriks, $rata);
                             foreach ($matriks as $key => $val) : ?>
                                 <th><?= $key ?></th>
                             <?php endforeach ?>
