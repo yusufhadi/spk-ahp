@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>Sub</h1>
+    <h1>Sub Kriteria</h1>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -8,15 +8,15 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Pencarian. . ." name="q" value="<?= $_GET['q'] ?>" />
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <button class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-            </div>
+            </div> -->
             <div class="form-group">
                 <a class="btn btn-primary" href="?m=sub_tambah"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <a class="btn btn-default" href="cetak.php?m=sub&a=<?= $_GET['q'] ?>" target="_blank"><span class="glyphicon glyphicon-print"></span> Cetak</a>
-            </div>
+            </div> -->
         </form>
     </div>
     <div class="table-responsive">

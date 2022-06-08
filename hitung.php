@@ -61,13 +61,15 @@
                             foreach ($matriks as $key => $val) : ?>
                                 <th><?= $key ?></th>
                             <?php endforeach ?>
-                            <th>Jumblah</th>
+                            <th>Jumlah</th>
                             <th>Prioritas</th>
                             <th>Eigen</th>
 
                         </tr>
                     </thead>
-                    <?php foreach ($normal as $key => $val) : ?>
+                    <?php
+                    $total_eigen = 0;
+                    foreach ($normal as $key => $val) : ?>
                         <tr>
                             <td><?= $key ?></td>
                             <?php foreach ($val as $k => $v) : ?>
@@ -75,9 +77,17 @@
                             <?php endforeach ?>
                             <td><?= round(array_sum($val), 3) ?></td>
                             <td><?= round($rata[$key], 3) ?></td>
-                            <td><?= round($cm[$key], 3) ?></td>
+                            <?php
+                                $eigen = $rata[$key] * $total[$key];
+                                $total_eigen = $total_eigen + $eigen;
+                                ?>
+                            <td><?= round($eigen, 3) ?></td>
                         </tr>
                     <?php endforeach ?>
+                    <tfoot>
+                        <td colspan="8" class="text-center">Total Eigen</td>
+                        <td><?php echo (round($total_eigen, 3)) ?></td>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -143,7 +153,7 @@
             </div>
             <div class="panel-body">
                 <?php
-                $CI = ((array_sum($cm) / count($cm)) - count($cm)) / (count($cm) - 1);
+                $CI = (((round($total_eigen, 3)) - (count($cm))) / ((count($cm)) -  1));
                 $RI = $nRI[count($matriks)];
                 $CR = $CI / $RI;
                 echo "<p>Consistency Index: " . round($CI, 3) . "<br />";
@@ -219,7 +229,7 @@ $hasil_bobot = get_hasil_bobot($data);
                 </tr>
                 <tr>
                     <?php foreach ($rata as $key => $val) : ?>
-                        <th><?= round($val, 4) ?></th>
+                        <th><?= round($val, 3) ?></th>
                     <?php endforeach ?>
                 </tr>
             </thead>
@@ -229,7 +239,7 @@ $hasil_bobot = get_hasil_bobot($data);
                     <td><?= $key ?></td>
                     <td><?= $ALTERNATIF[$key] ?></td>
                     <?php foreach ($val as $k => $v) : ?>
-                        <td><?= round($v, 4) ?></td>
+                        <td><?= round($v, 3) ?></td>
                     <?php endforeach ?>
                 </tr>
             <?php endforeach; ?>
@@ -247,10 +257,12 @@ $hasil_bobot = get_hasil_bobot($data);
                 <tr>
                     <th>Kode</th>
                     <th>Nama</th>
-                    <th>Ranking</th>
                     <th>Total</th>
+                    <th>Ranking</th>
+                    <th>Keterangan</th>
                 </tr>
             </thead>
+
             <?php
             function get_total($hasil_bobot, $rata)
             {
@@ -266,13 +278,29 @@ $hasil_bobot = get_hasil_bobot($data);
             }
             $total = get_total($hasil_bobot, $rata);
             FAHP_save($total);
+            function keterangan($total)
+            {
+                global $SUB;
+                $arr = array();
+                foreach ($total as $val) {
+                    if ($total >= 0.333) {
+                        $arr[$val] = "Layak vaksin";
+                    } else {
+                        $arr[$val] = "Tidak Layak";
+                    }
+                }
+                return $arr;
+            }
+            $keterangan = keterangan($total);
+            FAHP_status($keterangan);
             $rows = $db->get_results("SELECT * FROM tb_alternatif  ORDER BY total DESC");
             foreach ($rows as $row) : ?>
                 <tr>
                     <td><?= $row->kode_alternatif ?></td>
                     <td><?= $row->nama_alternatif ?></td>
+                    <td><?= round($row->total, 3) ?></td>
                     <td><?= $row->rank ?></td>
-                    <td><?= round($row->total, 4) ?></td>
+                    <td><?= $row->keterangan ?></td>
                 </tr>
             <?php endforeach ?>
         </table>
@@ -281,7 +309,7 @@ $hasil_bobot = get_hasil_bobot($data);
         <?php
         $best = $rows[0]->kode_alternatif;
         ?>
-        <p>Jadi pilihan terbaik adalah <strong><?= $ALTERNATIF[$best] ?></strong> dengan nilai <strong><?= round($total[$best], 3) ?></strong></p>
+        <!-- <p>Jadi pilihan terbaik adalah <strong><?= $ALTERNATIF[$best] ?></strong> dengan nilai <strong><?= round($total[$best], 3) ?></strong></p> -->
         <p><a class="btn btn-default" target="_blank" href="cetak.php?m=hitung"><span class="glyphicon glyphicon-print"></span> Cetak</a></p>
     </div>
 </div>

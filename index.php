@@ -52,7 +52,7 @@ if (empty($_SESSION['login']))
 						</ul>
 					</li>
 					<li><a href="?m=hitung"><span class="glyphicon glyphicon-calendar"></span> Perhitungan</a></li>
-					<li><a href="?m=password"><span class="glyphicon glyphicon-lock"></span> Password</a></li>
+					<!-- <li><a href="?m=password"><span class="glyphicon glyphicon-lock"></span> Password</a></li> -->
 					<li><a href="aksi.php?act=logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				</ul>
 				<div class="navbar-text"></div>

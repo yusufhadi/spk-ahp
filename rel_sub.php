@@ -97,7 +97,7 @@
                     <?php foreach ($matriks as $key => $val) : ?>
                         <th><?= $key ?></th>
                     <?php endforeach ?>
-                    <th>Jumblah</th>
+                    <th>Jumlah</th>
                     <th>Prioritas</th>
                     <th>Eigen</th>
                 </tr>
@@ -110,38 +110,21 @@
                     <?php endforeach ?>
                     <td><?= round(array_sum($val), 3) ?></td>
                     <td><?= round($rata[$key], 3) ?></td>
-                    <td><?= round($cm[$key], 3) ?></td>
+                    <?php
+                            $eigen = $rata[$key] * $total[$key];
+                            $total_eigen = $total_eigen + $eigen;
+                            ?>
+                    <td><?= round($eigen, 3) ?></td>
                 </tr>
             <?php endforeach ?>
+            <tfoot>
+                <td colspan="6" class="text-center">Total Eigen</td>
+                <td><?php echo (round($total_eigen, 3)) ?></td>
+            </tfoot>
         </table>
         <div class="panel-body">
-
-        </div>
-        <!-- <table class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Kode</th>
-                    <?php foreach ($matriks as $key => $val) : ?>
-                        <th><?= $key ?></th>
-                    <?php endforeach ?>
-                    <th>Total</th>
-                    <th>CM (Total/Prioritas)</th>
-                </tr>
-            </thead>
-            <?php foreach ($mmult as $key => $val) : ?>
-                <tr>
-                    <td><?= $key ?></td>
-                    <?php foreach ($val as $k => $v) : ?>
-                        <td><?= round($v, 3) ?></td>
-                    <?php endforeach ?>
-                    <td><?= round(array_sum($val), 3) ?></td>
-                    <td><?= round($cm[$key], 3) ?></td>
-                </tr>
-            <?php endforeach ?>
-        </table> -->
-        <div class="panel-body">
             <?php
-                $CI = ((array_sum($cm) / count($cm)) - count($cm)) / (count($cm) - 1);
+                $CI = (((round($total_eigen, 3)) - (count($cm))) / ((count($cm)) -  1));
                 $RI = $nRI[count($matriks)];
                 $CR = $RI == 0 ? 0 : $CI / $RI;
                 echo "<p>Consistency Index: " . round($CI, 3) . "<br />";

@@ -223,6 +223,19 @@ function FAHP_save($total = array())
         $no++;
     }
 }
+
+function FAHP_status($keterangan = array())
+{
+    global $db;
+
+    arsort($keterangan);
+    $no = 1;
+    foreach ($keterangan as $key => $val) {
+        $db->query("UPDATE tb_alternatif SET keterangan='$val'");
+        $no++;
+    }
+}
+
 function set_value($key = null, $default = null)
 {
     global $_POST;

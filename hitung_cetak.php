@@ -7,6 +7,7 @@
             <th>Nama Alternatif</th>
             <th>Total</th>
             <th>Rank</th>
+            <th>Keterangan</th>
         </tr>
     </thead>
     <?php
@@ -21,8 +22,9 @@
             <td><?= ++$no ?></td>
             <td><?= $row->kode_alternatif ?></td>
             <td><?= $row->nama_alternatif ?></td>
-            <td><?= round($row->total, 4) ?></td>
+            <td><?= round($row->total, 3) ?></td>
             <td><?= $row->rank ?></td>
+            <td><?= $row->keterangan ?></td>
         </tr>
     <?php endforeach ?>
 </table>

@@ -8,15 +8,15 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Pencarian. . ." name="q" value="<?= $_GET['q'] ?>" />
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <button class="btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-            </div>
+            </div> -->
             <div class="form-group">
                 <a class="btn btn-primary" href="?m=alternatif_tambah"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <a class="btn btn-default" href="cetak.php?m=alternatif&q=<?= $_GET['q'] ?>" target="_blank"><span class="glyphicon glyphicon-print"></span> Cetak</a>
-            </div>
+            </div> -->
         </form>
     </div>
     <div class="table-responsive">
