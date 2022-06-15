@@ -42,6 +42,10 @@
                     <td><?= $row->kode_alternatif ?></td>
                     <td><?= $row->nama_alternatif ?></td>
                     <td>
+                        <!-- <a class="btn btn-xs btn-default" href="cetak.php?m=alternatif&ID=<?= $row->kode_alternatif ?>" target="_blank"><span class="glyphicon glyphicon-print"></span></a> -->
+
+                        <!-- <a class="btn btn-xs btn-default" href="cetak_sertifikat.php?nama=<?= $row->nama_alternatif ?>" target="_blank"><span class="glyphicon glyphicon-print"></span></a> -->
+
                         <a class="btn btn-xs btn-warning" href="?m=alternatif_ubah&ID=<?= $row->kode_alternatif ?>"><span class="glyphicon glyphicon-edit"></span></a>
                         <a class="btn btn-xs btn-danger" href="aksi.php?act=alternatif_hapus&ID=<?= $row->kode_alternatif ?>" onclick="return confirm('Hapus data?')"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>

@@ -74,7 +74,7 @@ function get_rel_alternatif($kriteria = '')
        FROM tb_rel_alternatif ra 
        INNER JOIN tb_alternatif a ON a.kode_alternatif = ra.kode_alternatif
        LEFT JOIN tb_sub s ON s.kode_sub=ra.kode_sub
-       WHERE nama_alternatif LIKE '%" . esc_field($_GET['q']) . "%'
+       WHERE nama_alternatif LIKE '%'" . esc_field($_GET['q']) . "
        ORDER BY kode_alternatif, ra.kode_kriteria");
     $arr = array();
     foreach ($rows as $row) {

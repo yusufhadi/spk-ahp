@@ -36,6 +36,7 @@ foreach ($rows as $row) {
                 <button class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Ubah</a>
             </div>
         </form>
+
     </div>
 
     <table class="table table-bordered table-hover table-striped">
@@ -50,19 +51,27 @@ foreach ($rows as $row) {
             </tr>
         </thead>
         <?php
-
+        $matriks = get_relkriteria();
+        $total = get_baris_total($matriks);
         $no = 1;
 
         foreach ($data as $key => $value) : ?>
             <tr>
                 <th><?= $key ?></th>
                 <?php
-                foreach ($value as $dt) {
-                    echo "<td>" . round($dt, 3) . "</td>";
-                }
-                $no++;
-                ?>
+                    foreach ($value as $dt) {
+                        echo "<td>" . round($dt, 3) . "</td>";
+                    }
+                    $no++;
+                    ?>
             </tr>
         <?php endforeach ?>
+        <tfoot>
+            <!-- <td>&nbsp;</td> -->
+            <td>Total</td>
+            <?php foreach ($total as $k => $v) : ?>
+                <td><?= round($v, 3) ?></td>
+            <?php endforeach ?>
+        </tfoot>
     </table>
 </div>

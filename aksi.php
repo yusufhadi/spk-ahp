@@ -178,6 +178,7 @@ else if ($mod == 'rel_kriteria') {
     }
 }
 
+
 /** sub */
 elseif ($mod == 'sub_tambah') {
     $kode_kriteria = $_POST['kode_kriteria'];

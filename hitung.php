@@ -251,8 +251,9 @@ $hasil_bobot = get_hasil_bobot($data);
     <div class="panel-heading">
         <h3 class="panel-title">Perangkingan</h3>
     </div>
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered table-striped">
+    <div class="table-responsive" style="padding-left:10px;padding-right:10px;">
+        <br>
+        <table class="table table-hover table-bordered table-striped" id="perangkingan">
             <thead>
                 <tr>
                     <th>Kode</th>
@@ -260,6 +261,7 @@ $hasil_bobot = get_hasil_bobot($data);
                     <th>Total</th>
                     <th>Ranking</th>
                     <th>Keterangan</th>
+                    <th>Action</th>
                 </tr>
             </thead>
 
@@ -282,26 +284,39 @@ $hasil_bobot = get_hasil_bobot($data);
             {
                 global $SUB;
                 $arr = array();
-                foreach ($total as $val) {
-                    if ($total >= 0.333) {
-                        $arr[$val] = "Layak vaksin";
+                $s = 0;
+                foreach ($total as $aa) {
+                    if (floatval($aa->total) >= 0.333) {
+                        $arr[$s] = "Vaksin";
                     } else {
-                        $arr[$val] = "Tidak Layak";
+
+                        $arr[$s] = "Ditunda";
                     }
+                    $s = $s + 1;
                 }
                 return $arr;
             }
-            $keterangan = keterangan($total);
+            // function print($keterangan){}
+            $rows1 = $db->get_results("SELECT * FROM tb_alternatif  ORDER BY total DESC");
+            $keterangan = keterangan($rows1);
             FAHP_status($keterangan);
             $rows = $db->get_results("SELECT * FROM tb_alternatif  ORDER BY total DESC");
+            $a = 0;
             foreach ($rows as $row) : ?>
                 <tr>
                     <td><?= $row->kode_alternatif ?></td>
                     <td><?= $row->nama_alternatif ?></td>
                     <td><?= round($row->total, 3) ?></td>
                     <td><?= $row->rank ?></td>
-                    <td><?= $row->keterangan ?></td>
+                    <td><?= $keterangan[$a] ?></td>
+                    <td><?php
+                            if ($keterangan[$a] == "Vaksin") { ?>
+                            <a class="btn btn-xs btn-default" href="cetak_sertifikat.php?nama=<?= $row->nama_alternatif ?>" target="_blank"><span class="glyphicon glyphicon-print"></span></a>
+                        <?php
+                            }
+                            ?></td>
                 </tr>
+                <?php $a++; ?>
             <?php endforeach ?>
         </table>
     </div>
@@ -310,7 +325,7 @@ $hasil_bobot = get_hasil_bobot($data);
         $best = $rows[0]->kode_alternatif;
         ?>
         <!-- <p>Jadi pilihan terbaik adalah <strong><?= $ALTERNATIF[$best] ?></strong> dengan nilai <strong><?= round($total[$best], 3) ?></strong></p> -->
-        <p><a class="btn btn-default" target="_blank" href="cetak.php?m=hitung"><span class="glyphicon glyphicon-print"></span> Cetak</a></p>
+        <!-- <p><a class="btn btn-default" target="_blank" href="cetak.php?m=hitung"><span class="glyphicon glyphicon-print"></span> Cetak</a></p> -->
     </div>
 </div>
 <div class="panel panel-primary">
@@ -376,9 +391,25 @@ $hasil_bobot = get_hasil_bobot($data);
         }
 
         ?>
+
+        <link rel=stylesheet href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+        <link rel=stylesheet href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
         <script>
             $(function() {
+
                 $('#chart1').highcharts(<?= json_encode(get_chart1()) ?>);
+                $('#perangkingan').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print'
+                    ]
+                });
+
             })
         </script>
         <div id="chart1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>

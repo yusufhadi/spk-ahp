@@ -40,6 +40,7 @@
 
         if (is_file($mod . '_cetak.php'))
             include $mod . '_cetak.php';
+
         ?>
     </div>
 </body>
